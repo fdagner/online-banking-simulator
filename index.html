@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Online-Bankkonto</title>
+    <style>
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: left;
+		}
+		input, button {
+			margin: 10px;
+			padding: 5px;
+			font-size: 16px;
+		}
+
+.screen {
+  display: block;
+  width: 175px;
+  height: 335px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  margin-left: 20px;
+}
+
+.screen:before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #000;
+}
+
+.screen:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.screen {  
+  border: 10px solid black;
+  border-radius: 20px;
+}
+
+.onlinebank {
+    min-width: 800px;
+  margin-bottom: 30px;
+}
+
+#tan {
+    padding: 4px;
+}
+
+
+	</style>
+  </head>
+  <body>
+   <div style="display:flex;width:100%;max-width:1600px;flex-wrap: wrap;">
+    <div>
+    <h1 style="background-color: red;color: white; padding: 10px;">🏦 Sparbank Demohausen</h1>
+    <ul><li>Aktueller Kontostand: <span id="kontostand">test</span> €</li>
+        <li>Online-Limit: 500000 €</li>
+        </ul>
+    <div id="onlinebank" class="onlinebank">
+    <form>
+      <label for="empfaenger">Empfänger:</label>
+      <input type="text" id="empfaenger" name="empfaenger"><br><br>
+      <label for="empfaenger">IBAN:</label>
+      <input type="text" id="iban" name="iban" required><br><br>
+      <label for="betrag">Betrag in €:</label>
+      <input type="number" id="betrag" name="betrag" min="0" max="5000000" step="0.01"><br><br>
+      <label for="empfaenger">Verwendungszweck:</label>
+      <input type="text" id="verwendungszweck" name="verwendungszweck"><br><br>
+      <input type="button" id="buttonbank" value="Überweisen" onclick="ueberweisen()">
+      <div id="tanInputdiv" style="display:none;">
+        <label for="tanInputdiv"><b>Geben Sie Ihre TAN aus der DemoApp ein:</b></label>
+        <input type="text" id="tanInput" name="tanInput"><br><br>
+      </div>
+      <input type="button" value="Überweisung durchführen" id="ueberweisung" style="display:none;" onclick="ueberweisungDurchfuehren()">
+      <br><br>
+    </form>
+    </div>
+    <div id="zusammenfassung"></div>
+</div>
+<div id="screen" class="screen"><div id="tan"></div></div>
+   </div>       
+    <button id="neueueberweisung" onclick="reloadAndClear()" style="display:none;">Neue Überweisung</button>
+<div style="margin:0 auto;color: gray"><br><br><hr>🛡️ Dies ist nur eine Demo für schulische Zwecke, es finden keine tatsächlichen Transaktionen statt. <a href=https://github.com/fdagner/online-banking-simulator>Quellcode auf Github</a></div>
+    <script src="bank.js"></script>
+  </body>
+</html>
