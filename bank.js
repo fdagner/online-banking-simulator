@@ -22,7 +22,7 @@ function ueberweisen() {
         var betrag = document.getElementById("betrag").value;
         if (betrag > 0 && betrag <= 500000) {
             tan = generateTan();
-            document.getElementById("tan").innerHTML = "<h3>DemoApp Sparbank</h3><p>Neue Überweisung" + betrag + " €<br>am " + date + " um " + time + "</p> Ihre TAN lautet: " + tan + "<br><br>";
+            document.getElementById("tan").innerHTML = "<h3>DemoApp Sparbank</h3><p>Neue Überweisung " + betrag + " €<br>am " + date + " um " + time + "</p> Ihre TAN lautet: " + tan + "<br><br>";
             document.getElementById("tanInputdiv").style.display = "inline";
             document.getElementById("ueberweisung").style.display = "block";
             document.getElementById("buttonbank").style.display = "none";
