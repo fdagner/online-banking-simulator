@@ -7,6 +7,3 @@ For example, use one of this IBAN for testing:
 * DE02500105170137075030
 * DE02100500000054540402
 * CH0209000000100013997
-
-# To do
-Monetary amounts according to DIN 5008.
