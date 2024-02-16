@@ -5,7 +5,7 @@ const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes()
 var tan;
 var betrag = 0;
 const kontostandalt = 1350000;
-document.getElementById("kontostand").innerHTML = kontostandalt;
+document.getElementById("kontostand").innerHTML = formatCurrency(kontostandalt);
 
 function generateTan() {
     var min = 10000;
@@ -14,6 +14,7 @@ function generateTan() {
 }
 
 function ueberweisen() {
+    validateForm();
     const ibanInput = document.getElementById('iban');
     const ibanValue = ibanInput.value.replace(/\s+/g, ''); // Leerzeichen entfernen
     const ibanRegex = /^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/; // IBAN-Format
@@ -47,18 +48,16 @@ function ueberweisungDurchfuehren() {
         var betrag = document.getElementById("betrag").value;
         var verwendungszweck = document.getElementById("verwendungszweck").value;
 
-        var zusammenfassungText = "Die Überweisung an " + empfaenger + " " + iban + " über " + betrag + " Euro mit dem Verwendungszweck: " + "\"" + verwendungszweck + "\"" + " wurde erfolgreich ausgeführt.<br>Transaktionsnummer: 27254";
+        var zusammenfassungText = "Die Überweisung an " + empfaenger + " " + iban + " über " + formatCurrency(betrag) + " mit dem Verwendungszweck: " + "\"" + verwendungszweck + "\"" + " wurde erfolgreich ausgeführt.<br>Transaktionsnummer: 27254";
 
         document.getElementById("zusammenfassung").innerHTML = zusammenfassungText;
         var kontostand = kontostandalt - betrag;
-        document.getElementById("kontostand").innerHTML = kontostand;
+        document.getElementById("kontostand").innerHTML = formatCurrency(kontostand);
     } else {
         alert("Falsche TAN. Bitte versuchen Sie es erneut.");
     }
 
 }
-
-
 
 function reloadAndClear() {
     // Seite neu laden
@@ -71,3 +70,26 @@ function reloadAndClear() {
     });
 }
 
+function validateForm() {
+    var empfaenger = document.getElementById("empfaenger").value;
+    var iban = document.getElementById("iban").value;
+    var betrag = document.getElementById("betrag").value;
+    var verwendungszweck = document.getElementById("verwendungszweck").value;
+    
+    // Überprüfen Sie hier die Eingaben auf unerwünschte Inhalte
+    if (isValidInput(empfaenger) || isValidInput(iban) || isValidInput(betrag) || isValidInput(verwendungszweck)) {
+        alert("Unerlaubte Zeichen entdeckt. Bitte überprüfen Sie Ihre Eingaben.");
+        return false;
+    }
+}
+
+function isValidInput(value) {
+    // Überprüfung auf HTML-Tags und Skripte
+    const regex = /<.*?>/g;
+    return regex.test(value);
+}
+
+// Währung nach DIN 5008
+function formatCurrency(value) {
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+  }
