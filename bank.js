@@ -5,7 +5,7 @@ const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes()
 var tan;
 var betrag = 0;
 const kontostandalt = 1350000;
-document.getElementById("kontostand").innerHTML = kontostandalt;
+document.getElementById("kontostand").innerHTML = formatCurrency(kontostandalt);
 
 function generateTan() {
     var min = 10000;
@@ -48,11 +48,11 @@ function ueberweisungDurchfuehren() {
         var betrag = document.getElementById("betrag").value;
         var verwendungszweck = document.getElementById("verwendungszweck").value;
 
-        var zusammenfassungText = "Die Überweisung an " + empfaenger + " " + iban + " über " + betrag + " Euro mit dem Verwendungszweck: " + "\"" + verwendungszweck + "\"" + " wurde erfolgreich ausgeführt.<br>Transaktionsnummer: 27254";
+        var zusammenfassungText = "Die Überweisung an " + empfaenger + " " + iban + " über " + formatCurrency(betrag) + " mit dem Verwendungszweck: " + "\"" + verwendungszweck + "\"" + " wurde erfolgreich ausgeführt.<br>Transaktionsnummer: 27254";
 
         document.getElementById("zusammenfassung").innerHTML = zusammenfassungText;
         var kontostand = kontostandalt - betrag;
-        document.getElementById("kontostand").innerHTML = kontostand;
+        document.getElementById("kontostand").innerHTML = formatCurrency(kontostand);
     } else {
         alert("Falsche TAN. Bitte versuchen Sie es erneut.");
     }
@@ -88,3 +88,8 @@ function isValidInput(value) {
     const regex = /<.*?>/g;
     return regex.test(value);
 }
+
+// Währung nach DIN 5008
+function formatCurrency(value) {
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+  }
