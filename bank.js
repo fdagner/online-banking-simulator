@@ -14,6 +14,7 @@ function generateTan() {
 }
 
 function ueberweisen() {
+    validateForm();
     const ibanInput = document.getElementById('iban');
     const ibanValue = ibanInput.value.replace(/\s+/g, ''); // Leerzeichen entfernen
     const ibanRegex = /^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/; // IBAN-Format
@@ -58,8 +59,6 @@ function ueberweisungDurchfuehren() {
 
 }
 
-
-
 function reloadAndClear() {
     // Seite neu laden
     location.reload();
@@ -71,3 +70,21 @@ function reloadAndClear() {
     });
 }
 
+function validateForm() {
+    var empfaenger = document.getElementById("empfaenger").value;
+    var iban = document.getElementById("iban").value;
+    var betrag = document.getElementById("betrag").value;
+    var verwendungszweck = document.getElementById("verwendungszweck").value;
+    
+    // Überprüfen Sie hier die Eingaben auf unerwünschte Inhalte
+    if (isValidInput(empfaenger) || isValidInput(iban) || isValidInput(betrag) || isValidInput(verwendungszweck)) {
+        alert("Unerlaubte Zeichen entdeckt. Bitte überprüfen Sie Ihre Eingaben.");
+        return false;
+    }
+}
+
+function isValidInput(value) {
+    // Überprüfung auf HTML-Tags und Skripte
+    const regex = /<.*?>/g;
+    return regex.test(value);
+}
